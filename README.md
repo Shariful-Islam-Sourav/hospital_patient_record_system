@@ -25,6 +25,7 @@ The project demonstrates key advanced C programming concepts such as dynamic mem
 
 📌 No global variables (uses extern + separate module management)
 
+
 📁 Project Structure
 MediRecord_System/
 │
