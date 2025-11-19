@@ -1,4 +1,4 @@
-MediRecord System — Hospital Patient Record Manager
+** MediRecord System — Hospital Patient Record Manager **
 
 A modular C program for managing hospital patient information using dynamic memory, file handling, and structured data management.
 Developed as part of the Advanced C Programming course project.
