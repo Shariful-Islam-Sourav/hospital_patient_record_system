@@ -3,25 +3,27 @@
 
 struct Patient {
     int id;
-    char name[50];
+    char name[100];
     int age;
-    char blood[10];
-    char diseas[50];
-    char doctor[50];
-    char admissionDate[15];
+    char disease[100];
+    char doctor[100];
+    char admissionDate[20];
 };
 
-// Shared variables (declared in patient.c)
+/* Extern variables */
 extern struct Patient *patients;
 extern int patientCount;
 extern int capacity;
 
-// Core functions
-void initMemory();
+/* Core functions */
+void ensureCapacity();
 void addPatient();
 void displayPatients();
+void searchPatient();
+void updatePatient();
+void deletePatient();
 
-// File operations
+/* File I/O functions */
 void loadFromFile();
 void saveToFile();
 

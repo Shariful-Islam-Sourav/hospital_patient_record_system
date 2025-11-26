@@ -1,25 +1,30 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "patient.h"
-#include<stdlib.h>
 
+/* Global dynamic array */
 struct Patient *patients = NULL;
 int patientCount = 0;
 int capacity = 0;
 
-void initMemory() {
-    capacity = 10;
-    patients = malloc(sizeof(struct Patient) * capacity);
+void ensureCapacity() {
+    if (patientCount == capacity) {
+        capacity = (capacity == 0) ? 2 : capacity * 2;
+        patients = realloc(patients, capacity * sizeof(struct Patient));
+        if (!patients) {
+            printf("Memory allocation failed!\n");
+            exit(1);
+        }
+    }
 }
 
 void addPatient() {
-    if (patientCount >= capacity) {
-        capacity *= 2;
-        patients = realloc(patients, sizeof(struct Patient) * capacity);
-    }
+    ensureCapacity();
 
     struct Patient p;
 
-    printf("Enter ID: ");
+    printf("\nEnter Patient ID: ");
     scanf("%d", &p.id);
 
     printf("Enter Name: ");
@@ -28,13 +33,10 @@ void addPatient() {
     printf("Enter Age: ");
     scanf("%d", &p.age);
 
-    printf("Enter Blood Group: ");
-    scanf(" %[^\n]", p.blood);
-
     printf("Enter Disease: ");
-    scanf(" %[^\n]", p.diseas);
+    scanf(" %[^\n]", p.disease);
 
-    printf("Enter Doctor Name: ");
+    printf("Enter Doctor: ");
     scanf(" %[^\n]", p.doctor);
 
     printf("Enter Admission Date (YYYY-MM-DD): ");
@@ -47,21 +49,116 @@ void addPatient() {
 
 void displayPatients() {
     if (patientCount == 0) {
-        printf("\nNo records found.\n");
+        printf("\nNo patient records available.\n");
         return;
     }
 
-    printf("\n---- All Patient Records ----\n");
+    printf("\n--- All Patients ---\n");
+    for (int i = 0; i < patientCount; i++) {
+        printf("\nPatient %d:\n", i + 1);
+        printf("ID: %d\n", patients[i].id);
+        printf("Name: %s\n", patients[i].name);
+        printf("Age: %d\n", patients[i].age);
+        printf("Disease: %s\n", patients[i].disease);
+        printf("Doctor: %s\n", patients[i].doctor);
+        printf("Admission Date: %s\n", patients[i].admissionDate);
+    }
+}
+
+void searchPatient() {
+    if (patientCount == 0) {
+        printf("\nNo records available.\n");
+        return;
+    }
+
+    int id;
+    printf("\nEnter Patient ID to search: ");
+    scanf("%d", &id);
 
     for (int i = 0; i < patientCount; i++) {
-        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        printf("\nID: %d", patients[i].id);
-        printf("\nName: %s", patients[i].name);
-        printf("\nAge: %d", patients[i].age);
-        printf("\nName: %s", patients[i].blood);
-        printf("\nDisease: %s", patients[i].diseas);
-        printf("\nDoctor: %s", patients[i].doctor);
-        printf("\nAdmission Date: %s\n", patients[i].admissionDate);
-        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        if (patients[i].id == id) {
+            printf("\n--- Patient Found ---\n");
+            printf("ID: %d\n", patients[i].id);
+            printf("Name: %s\n", patients[i].name);
+            printf("Age: %d\n", patients[i].age);
+            printf("Disease: %s\n", patients[i].disease);
+            printf("Doctor: %s\n", patients[i].doctor);
+            printf("Admission Date: %s\n", patients[i].admissionDate);
+            return;
+        }
     }
+
+    printf("\nPatient with ID %d not found.\n", id);
+}
+
+void updatePatient() {
+    if (patientCount == 0) {
+        printf("\nNo records available.\n");
+        return;
+    }
+
+    int id;
+    printf("\nEnter Patient ID to update: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < patientCount; i++) {
+        if (patients[i].id == id) {
+
+            printf("\n--- Current Data ---\n");
+            printf("Name: %s\n", patients[i].name);
+            printf("Age: %d\n", patients[i].age);
+            printf("Disease: %s\n", patients[i].disease);
+            printf("Doctor: %s\n", patients[i].doctor);
+            printf("Admission Date: %s\n", patients[i].admissionDate);
+
+            printf("\n--- Enter New Data ---\n");
+
+            printf("Enter Name: ");
+            scanf(" %[^\n]", patients[i].name);
+
+            printf("Enter Age: ");
+            scanf("%d", &patients[i].age);
+
+            printf("Enter Disease: ");
+            scanf(" %[^\n]", patients[i].disease);
+
+            printf("Enter Doctor: ");
+            scanf(" %[^\n]", patients[i].doctor);
+
+            printf("Enter Admission Date: ");
+            scanf(" %[^\n]", patients[i].admissionDate);
+
+            printf("\nPatient updated successfully!\n");
+            return;
+        }
+    }
+
+    printf("\nPatient with ID %d not found.\n", id);
+}
+
+void deletePatient() {
+    if (patientCount == 0) {
+        printf("\nNo records to delete.\n");
+        return;
+    }
+
+    int id;
+    printf("\nEnter Patient ID to delete: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < patientCount; i++) {
+        if (patients[i].id == id) {
+
+            for (int j = i; j < patientCount - 1; j++) {
+                patients[j] = patients[j + 1];
+            }
+
+            patientCount--;
+
+            printf("\nPatient deleted successfully!\n");
+            return;
+        }
+    }
+
+    printf("\nPatient with ID %d not found.\n", id);
 }

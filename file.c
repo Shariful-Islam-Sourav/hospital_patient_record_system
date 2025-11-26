@@ -3,51 +3,26 @@
 #include <string.h>
 #include "patient.h"
 
-// Access variables from patient.c
-extern struct Patient *patients;
-extern int patientCount;
-extern int capacity;
-
-// Load data from file
 void loadFromFile() {
     FILE *fp = fopen("patients.txt", "r");
-    if (!fp) {
-        printf("Starting with an empty database.\n");
-        return;
-    }
+    if (!fp) return;
 
-    capacity = 10;
-    patients = malloc(sizeof(struct Patient) * capacity);
-    patientCount = 0;
+    struct Patient p;
 
-    while (!feof(fp)) {
-        struct Patient p;
-        int r = fscanf(fp, "%d,%49[^,],%d, %9[^,],%49[^,],%49[^,],%14[^\n]\n",
-                       &p.id,
-                       p.name,
-                       &p.age,
-                       p.blood,
-                       p.diseas,
-                       p.doctor,
-                       p.admissionDate);
+    while (fscanf(fp, "%d,%99[^,],%d,%99[^,],%99[^,],%19[^\n]\n",
+                  &p.id, p.name, &p.age, p.disease, p.doctor, p.admissionDate) == 6) {
 
-        if (r == 6) {
-            if (patientCount >= capacity) {
-                capacity *= 2;
-                patients = realloc(patients, sizeof(struct Patient) * capacity);
-            }
-            patients[patientCount++] = p;
-        }
+        ensureCapacity();
+        patients[patientCount++] = p;
     }
 
     fclose(fp);
 }
 
-// Save data to file
 void saveToFile() {
     FILE *fp = fopen("patients.txt", "w");
     if (!fp) {
-        printf("Error: Could not save file.\n");
+        printf("\nError saving file.\n");
         return;
     }
 
@@ -56,7 +31,7 @@ void saveToFile() {
                 patients[i].id,
                 patients[i].name,
                 patients[i].age,
-                patients[i].diseas,
+                patients[i].disease,
                 patients[i].doctor,
                 patients[i].admissionDate);
     }
