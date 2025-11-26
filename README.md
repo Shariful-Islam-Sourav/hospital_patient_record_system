@@ -1,3 +1,5 @@
+
+
 # **MediRecord System — Hospital Patient Record Manager**
 
 A modular C application for managing hospital patient records using dynamic memory, file handling, and structured data management.
@@ -21,36 +23,6 @@ This project was built phase-by-phase across multiple weeks.
 
 ---
 
-## ✨ **Features (Up to Week 3 Completion)**
-
-### ✔ Week 1 – Project Design
-
-* Defined system requirements
-* Created program architecture
-* Designed patient data structure
-* Prepared module breakdown (main, patient, file)
-* Planned file storage format
-* Finalized input/output design
-
-### ✔ Week 2 – Core Implementation
-
-* Add new patient
-* Display all patients
-* Dynamic array using `malloc` + `realloc`
-* Save patient data to file
-* Load patient data from file
-* Base menu system
-
-### ✔ Week 3 – Feature Expansion
-
-* Search patient by ID
-* Update patient information
-* Delete patient
-* Rewrite updated file data
-* Improved input handling (names with spaces)
-* Fully integrated modular structure
-
----
 
 ## 📁 **Project Structure**
 
@@ -162,20 +134,11 @@ Example content of `patients.txt`:
 * Easy to read and modify
 * Automatically loaded on application start
 
+---
 
 ## 👨‍💻 **Author**
 
-**Shariful Islam**
+**Sourav Md Shariful Islam**
 Computer Science & Engineering
 Sejong University
 
----
-
-If you'd like, I can also generate:
-
-📌 A **PDF version of the README**
-📌 A **beautiful GitHub badge header**
-📌 A **Makefile**
-📌 A **Week 3 Report PDF** (for submitting to your professor)
-
-Just tell me!
