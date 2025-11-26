@@ -1,8 +1,3 @@
-Here is your **final, polished, professional README.md**, fully matching your Week 3 project completion level.
-This version is suitable for **GitHub**, **assignment submission**, or **portfolio use**.
-
----
-
 # **MediRecord System — Hospital Patient Record Manager**
 
 A modular C application for managing hospital patient records using dynamic memory, file handling, and structured data management.
