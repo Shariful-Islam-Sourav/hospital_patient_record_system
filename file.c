@@ -5,10 +5,11 @@
 
 void loadFromFile() {
     FILE *fp = fopen("patients.txt", "r");
-    if (!fp) return;
+    if (!fp) return;  // File may not exist on first run
 
     struct Patient p;
 
+    // Read CSV values from each line
     while (fscanf(fp, "%d,%99[^,],%d,%99[^,],%99[^,],%19[^\n]\n",
                   &p.id, p.name, &p.age, p.disease, p.doctor, p.admissionDate) == 6) {
 
@@ -22,10 +23,11 @@ void loadFromFile() {
 void saveToFile() {
     FILE *fp = fopen("patients.txt", "w");
     if (!fp) {
-        printf("\nError saving file.\n");
+        printf("File saving error!\n");
         return;
     }
 
+    // Write all records back to file
     for (int i = 0; i < patientCount; i++) {
         fprintf(fp, "%d,%s,%d,%s,%s,%s\n",
                 patients[i].id,
